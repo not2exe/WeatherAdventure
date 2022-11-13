@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.TitleDegrees" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">64sp</item>
+    </style>
+    <style name="CardView.Base">
+        <item name="cardCornerRadius">20dp</item>
+    </style>
+</resources>
