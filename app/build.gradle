@@ -39,6 +39,7 @@ dependencies {
     def navigation = "2.5.3"
     def coroutines = "1.6.4"
     def dagger = "2.44.1"
+    def swipe = "1.1.0"
 
 
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
@@ -51,6 +52,8 @@ dependencies {
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorLayout"
+
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swipe")
 
 
     implementation 'androidx.core:core-ktx:1.9.0'
