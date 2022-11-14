@@ -13,7 +13,7 @@
         android:theme="@style/Theme.WeatherAdventure"
         tools:targetApi="31">
         <activity
-            android:name="com.weatheradventure.MainActivity"
+            android:name="com.weatheradventure.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

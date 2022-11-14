@@ -2,4 +2,6 @@
     <string name="app_name">WeatherAdventure</string>
     <string name="current_location">Текущее место</string>
     <string name="others_locations">Другие места</string>
+    <string name="sunrise">Рассвет</string>
+    <string name="sunset">Закат</string>
 </resources>

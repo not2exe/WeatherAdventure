@@ -31,29 +31,34 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
-    def coordinatorLayout = "1.2.0"
     def preferences = "1.2.0"
     def navigation = "2.5.3"
     def coroutines = "1.6.4"
     def dagger = "2.44.1"
     def swipe = "1.1.0"
+    def worker = "2.7.1"
 
 
+    //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation"
-
+    //SharedPreferences
     implementation "androidx.preference:preference-ktx:$preferences"
-
+    //Dagger 2
     implementation "com.google.dagger:dagger:$dagger"
     kapt "com.google.dagger:dagger-compiler:$dagger"
-
+    //Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
-    implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorLayout"
-
+    //SwipeRefreshLayout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swipe")
+    //WorkManager
+    implementation("androidx.work:work-runtime-ktx:$worker")
 
 
     implementation 'androidx.core:core-ktx:1.9.0'
