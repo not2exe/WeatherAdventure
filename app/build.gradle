@@ -43,6 +43,8 @@ dependencies {
     def dagger = "2.44.1"
     def swipe = "1.1.0"
     def worker = "2.7.1"
+    def retrofit = "2.9.0"
+    def location = "21.0.1"
 
 
     //Navigation
@@ -59,6 +61,11 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swipe")
     //WorkManager
     implementation("androidx.work:work-runtime-ktx:$worker")
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    //Location
+    implementation "com.google.android.gms:play-services-location:$location"
 
 
     implementation 'androidx.core:core-ktx:1.9.0'

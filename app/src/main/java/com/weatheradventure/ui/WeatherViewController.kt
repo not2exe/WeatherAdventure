@@ -1,16 +1,20 @@
 package com.weatheradventure.ui
 
-import androidx.fragment.app.Fragment
+import android.app.Activity
+import android.content.Context
 import com.example.weatheradventure.databinding.FragmentWeatherBinding
 import com.weatheradventure.Constants
 import java.text.SimpleDateFormat
 import java.util.*
 
 class WeatherViewController(
-    private val binding: FragmentWeatherBinding
+    private val binding: FragmentWeatherBinding,
+    private val activity: Activity,
+    private val permissionId: Int = Constants.REQUEST_GEO_CODE,
+    private val context: Context = binding.root.context,
 ) {
-    fun setUpViews() {
 
+    fun setUpViews() {
     }
 
     private fun setupDegrees(degrees: Int) =
@@ -33,6 +37,8 @@ class WeatherViewController(
         binding.sunriseDateTv.text = format.format(sunrise)
         binding.sunsetDateTv.text = format.format(sunset)
     }
+
+
 
 
     private fun Int.toDegrees(): String = "$this°"
