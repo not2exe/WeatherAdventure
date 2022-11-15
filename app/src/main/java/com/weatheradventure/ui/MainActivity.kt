@@ -8,7 +8,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.weatheradventure.R
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.weatheradventure.Constants
 import com.weatheradventure.WeatherApp
 import com.weatheradventure.data.Cache
@@ -20,7 +20,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var cache: Cache
 
 
-    private val fusedLocationClient by lazy { LocationServices.getFusedLocationProviderClient(this) }
+    @Inject
+    lateinit var fusedLocationClient: FusedLocationProviderClient
 
     @Inject
     lateinit var remoteWeatherRepo: RemoteWeatherRepoImpl
