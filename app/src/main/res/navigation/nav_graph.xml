@@ -3,11 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/manageLocationsFragment">
+    app:startDestination="@id/weatherFragment2">
 
     <fragment
         android:id="@+id/manageLocationsFragment"
         android:name="com.weatheradventure.ui.SearchLocationsFragment"
         android:label=""
         tools:layout="@layout/fragment_search_locations" />
+    <fragment
+        android:id="@+id/weatherFragment2"
+        android:name="com.weatheradventure.ui.WeatherFragment"
+        android:label=""
+        tools:layout="@layout/fragment_weather" >
+        <action
+            android:id="@+id/action_weatherFragment2_to_manageLocationsFragment"
+            app:destination="@id/manageLocationsFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"/>
+    </fragment>
 </navigation>

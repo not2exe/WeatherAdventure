@@ -1,11 +1,15 @@
 package com.weatheradventure.ui
 
+import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.FrameLayout
 import androidx.annotation.StringRes
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.fragment.findNavController
 import com.example.weatheradventure.R
 import com.example.weatheradventure.databinding.FragmentSearchLocationsBinding
 import com.google.android.material.snackbar.Snackbar
@@ -34,8 +38,11 @@ class SearchLocationsViewController @Inject constructor(
     )
 
     fun setupViews() {
+        fragment.requireActivity()
+            .findViewById<FrameLayout>(R.id.navigate_layout).visibility = View.GONE
         setupObservers()
         setupAutoCompleteText()
+        setupButtons()
     }
 
     private fun setupObservers() {
@@ -69,6 +76,16 @@ class SearchLocationsViewController @Inject constructor(
         }
 
 
+    }
+
+    private fun setupButtons() = with(binding) {
+        checkButton.setOnClickListener {
+            viewModel.selectPlace(autoCompleteTV.text.toString())
+            fragment.findNavController().popBackStack()
+        }
+        backButton.setOnClickListener {
+            fragment.findNavController().popBackStack()
+        }
     }
 
     private fun showSnackbar(@StringRes id: Int?) {

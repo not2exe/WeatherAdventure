@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.drawable.ColorDrawable
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -13,21 +12,13 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
 import com.example.weatheradventure.R
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.material.navigation.NavigationView
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
 import com.weatheradventure.Constants
 import com.weatheradventure.data.CurrentLocationCache
-import com.weatheradventure.data.remoteLocations.RemoteLocationsRepo
-import com.weatheradventure.data.remoteWeather.RemoteWeatherRepo
 import com.weatheradventure.di.WeatherApp
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -37,16 +28,12 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    @Inject
-    lateinit var remoteLocationsRepo: RemoteLocationsRepo
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         (application as WeatherApp).appComponent.activityComponent().inject(this)
-        lifecycleScope.launch { remoteLocationsRepo.get("Москва") }
-        setupDrawerLayout()
         requestLocation()
+        setupOnClickGeo()
     }
 
     override fun onRequestPermissionsResult(
@@ -59,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
+
 
     @SuppressLint("MissingPermission")
     private fun requestLocation() {
@@ -110,19 +98,12 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun setupDrawerLayout() {
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(getColorFromAttr(R.attr.appBarColor)))
-        supportActionBar?.elevation = 0F
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fcvMainContainer) as NavHostFragment
-        val navController = navHostFragment.navController
-        findViewById<NavigationView>(R.id.navigationView).setupWithNavController(navController)
-        NavigationUI.setupActionBarWithNavController(
-            this,
-            navController,
-            findViewById<DrawerLayout>(R.id.drawer_layout)
-        )
+    private fun setupOnClickGeo() {
+        findViewById<ShapeableImageView>(R.id.geoButton).setOnClickListener {
+            requestLocation()
+        }
     }
+
 
     @ColorInt
     fun Context.getColorFromAttr(

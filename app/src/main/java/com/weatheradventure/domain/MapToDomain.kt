@@ -14,42 +14,45 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 
-class MapToDomain @Inject constructor(private val geocoder: Geocoder, cache: CurrentLocationCache) {
-    private val addresses = geocoder.getFromLocation(cache.getLatitude(), cache.getLongitude(), 1)
-    private val place = Place(
-        address = addresses?.get(0)?.getAddressLine(0) ?: "",
-        city = addresses?.get(0)?.locality ?: "",
-        state = addresses?.get(0)?.adminArea ?: "",
-        country = addresses?.get(0)?.countryName ?: ""
-    )
+class MapToDomain @Inject constructor(private val geocoder: Geocoder, private val cache: CurrentLocationCache) {
 
     fun toCurrentDaily(
         currentWeatherResponseModel: CurrentWeatherResponseModel,
         weatherResponseDailyModel: WeatherResponseDailyModel
-    ): DailyWeatherModel = DailyWeatherModel(
-        date = toMs(currentWeatherResponseModel.date),
-        place = place,
-        degrees = currentWeatherResponseModel.temp.roundToInt(),
-        feelsLike = currentWeatherResponseModel.feelsLike.roundToInt(),
-        degreesNight = weatherResponseDailyModel.temp.night.roundToInt(),
-        degreesDay = weatherResponseDailyModel.temp.day.roundToInt(),
-        humidity = currentWeatherResponseModel.humidity,
-        uvi = doubleToUVI(currentWeatherResponseModel.uvi),
-        windSpeed = currentWeatherResponseModel.windSpeed.toInt(),
-        description = currentWeatherResponseModel.weatherDescription[0].main,
-        sunrise = toMs(weatherResponseDailyModel.sunrise),
-        sunset = toMs(weatherResponseDailyModel.sunset),
-        currentWeatherIconId = idToIconId(currentWeatherResponseModel.weatherDescription.first().iconId),
-        dayIconId = idToIconId(getFirstDaily(weatherResponseDailyModel.weatherDescription)),
-        nightIconId = idToIconId(
-            getFirstNightly(weatherResponseDailyModel.weatherDescription),
-        )
+    ): DailyWeatherModel =
+        DailyWeatherModel(
+            date = toMs(currentWeatherResponseModel.date),
+            place = getPlace(),
+            degrees = currentWeatherResponseModel.temp.roundToInt(),
+            feelsLike = currentWeatherResponseModel.feelsLike.roundToInt(),
+            degreesNight = weatherResponseDailyModel.temp.night.roundToInt(),
+            degreesDay = weatherResponseDailyModel.temp.day.roundToInt(),
+            humidity = currentWeatherResponseModel.humidity,
+            uvi = doubleToUVI(currentWeatherResponseModel.uvi),
+            windSpeed = currentWeatherResponseModel.windSpeed.toInt(),
+            description = currentWeatherResponseModel.weatherDescription[0].main,
+            sunrise = toMs(weatherResponseDailyModel.sunrise),
+            sunset = toMs(weatherResponseDailyModel.sunset),
+            currentWeatherIconId = idToIconId(currentWeatherResponseModel.weatherDescription.first().iconId),
+            dayIconId = idToIconId(getFirstDaily(weatherResponseDailyModel.weatherDescription)),
+            nightIconId = idToIconId(
+                getFirstNightly(weatherResponseDailyModel.weatherDescription),
+            )
     )
+    private fun getPlace():Place {
+        val addresses = geocoder.getFromLocation(cache.getLatitude(), cache.getLongitude(), 1)
+        return Place(
+            address = addresses?.get(0)?.getAddressLine(0) ?: "",
+            city = addresses?.get(0)?.locality ?: "",
+            state = addresses?.get(0)?.adminArea ?: "",
+            country = addresses?.get(0)?.countryName ?: ""
+        )
+    }
 
     fun dailyResponseToDailyDomain(weatherResponseDailyModel: WeatherResponseDailyModel): DailyWeatherModel =
         DailyWeatherModel(
             date = toMs(weatherResponseDailyModel.date),
-            place = place,
+            place = getPlace(),
             degreesNight = weatherResponseDailyModel.temp.night.roundToInt(),
             degreesDay = weatherResponseDailyModel.temp.day.roundToInt(),
             humidity = weatherResponseDailyModel.humidity,
