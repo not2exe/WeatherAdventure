@@ -3,7 +3,18 @@
 
     <style name="TextAppearance.TitleDegrees" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:textSize">64sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
+    <style name="TextAppearance.Medium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Small" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Large" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="CardView.Base">
         <item name="cardCornerRadius">20dp</item>
     </style>

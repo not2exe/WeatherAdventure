@@ -9,9 +9,9 @@ data class WeatherResponseOneCallModel(
     @SerializedName(Constants.LON)
     val longitude: Double,
     @SerializedName(Constants.CURRENT)
-    val current: CurrentWeatherModel,
+    val current: CurrentWeatherResponseModel,
     @SerializedName(Constants.HOURLY)
-    val hourly: List<CurrentWeatherModel>,
+    val hourly: List<CurrentWeatherResponseModel>,
     @SerializedName(Constants.DAILY)
     val daily: List<WeatherResponseDailyModel>
 )

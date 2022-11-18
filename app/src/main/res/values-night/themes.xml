@@ -1,7 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.WeatherAdventure" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="Theme.WeatherAdventure" parent="Theme.Material3.Dark">
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <item name="colorPrimaryDark">@color/md_theme_dark_background</item>
         <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
         <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
@@ -28,5 +29,7 @@
         <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
         <item name="iconColor">@color/md_theme_dark_onSurface</item>
+        <item name="whiteIconColor">?attr/iconColor</item>
+        <item name="appBarColor">@color/md_theme_dark_background</item>
     </style>
 </resources>

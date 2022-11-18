@@ -38,5 +38,23 @@ object Constants {
     const val REQUEST_GEO_CODE = 101
     const val DEF_LAT = 55.752F
     const val DEF_LON = 37.6175F
-
+    const val DAY_OF_THE_WEEK_PATTERN = "EEEE"
+    const val CLEAR_SKY_DAY_ID = "01d"
+    const val CLEAR_SKY_NIGHT_ID = "01n"
+    const val FEW_CLOUDS_DAY_ID = "02d"
+    const val FEW_CLOUDS_NIGHT_ID = "02n"
+    const val SCATTERED_CLOUDS_DAY_ID = "03d"
+    const val SCATTERED_CLOUDS_NIGHT_ID = "03n"
+    const val BROKEN_CLOUDS_NIGHT_ID = "04n"
+    const val BROKEN_CLOUDS_DAY_ID = "04d"
+    const val SHOWER_RAIN_DAY_ID = "09d"
+    const val SHOWER_RAIN_NIGHT_ID = "09n"
+    const val RAIN_DAY_ID = "10d"
+    const val RAIN_NIGHT_ID = "10n"
+    const val THUNDERSTORM_DAY_ID = "11d"
+    const val THUNDERSTORM_NIGHT_ID = "11n"
+    const val SNOW_DAY_ID = "13d"
+    const val SNOW_NIGHT_ID = "13n"
+    const val MIST_DAY_ID = "50d"
+    const val MIST_NIGHT_ID = "50n"
 }

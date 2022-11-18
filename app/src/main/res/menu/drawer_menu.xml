@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/manageLocationsFragment"
+        android:icon="@drawable/ic_outline_add_location_24"
+        android:title="@string/select_other_place" />
+    <item
+        android:id="@+id/weatherFragment"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/on_main_screen" />
+</menu>

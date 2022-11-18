@@ -2,42 +2,44 @@ package com.weatheradventure.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.util.TypedValue
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.example.weatheradventure.R
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.weatheradventure.Constants
-import com.weatheradventure.WeatherApp
-import com.weatheradventure.data.Cache
-import com.weatheradventure.data.remoteWeather.RemoteWeatherRepoImpl
+import com.weatheradventure.data.CurrentLocationCache
+import com.weatheradventure.di.WeatherApp
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     @Inject
-    lateinit var cache: Cache
-
+    lateinit var cache: CurrentLocationCache
 
     @Inject
     lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    @Inject
-    lateinit var remoteWeatherRepo: RemoteWeatherRepoImpl
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as WeatherApp).appComponent.activityComponent().inject(this)
-        if (!checkPermissions()) {
-            requestPermissions()
-        } else {
-            requestLocation()
-        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        (application as WeatherApp).appComponent.activityComponent().inject(this)
+        setupDrawerLayout()
+        requestLocation()
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -52,9 +54,27 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun requestLocation() {
-        fusedLocationClient.lastLocation.addOnSuccessListener {
-            setLocation(it)
+        fusedLocationClient.lastLocation.addOnCompleteListener(this) {
+            if (checkPermissions()) {
+                if (checkAvailabilityGeo()) {
+                    setLocation(it.result)
+                } else {
+                    Snackbar.make(
+                        findViewById(android.R.id.content),
+                        R.string.need_to_turn_on_location,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            } else {
+                requestPermissions()
+            }
         }
+    }
+
+    private fun checkAvailabilityGeo(): Boolean {
+        val locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
     private fun setLocation(location: Location) {
@@ -81,5 +101,29 @@ class MainActivity : AppCompatActivity() {
             ),
             Constants.REQUEST_GEO_CODE
         )
+    }
+
+    private fun setupDrawerLayout() {
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(getColorFromAttr(R.attr.appBarColor)))
+        supportActionBar?.elevation = 0F
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fcvMainContainer) as NavHostFragment
+        val navController = navHostFragment.navController
+        findViewById<NavigationView>(R.id.navigationView).setupWithNavController(navController)
+        NavigationUI.setupActionBarWithNavController(
+            this,
+            navController,
+            findViewById<DrawerLayout>(R.id.drawer_layout)
+        )
+    }
+
+    @ColorInt
+    fun Context.getColorFromAttr(
+        @AttrRes attrColor: Int,
+        typedValue: TypedValue = TypedValue(),
+        resolveRefs: Boolean = true
+    ): Int {
+        theme.resolveAttribute(attrColor, typedValue, resolveRefs)
+        return typedValue.data
     }
 }

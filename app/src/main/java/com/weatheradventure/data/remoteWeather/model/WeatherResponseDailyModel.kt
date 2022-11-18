@@ -20,8 +20,6 @@ data class WeatherResponseDailyModel(
     val windSpeed: Double,
     @SerializedName(Constants.WEATHER)
     val weatherDescription: List<WeatherResponseDescription>,
-    @SerializedName(Constants.PROBABILITY_OF_PRECIPITATION)
-    val pop: Double,
     @SerializedName(Constants.UVI)
     val uvi: Double
 )

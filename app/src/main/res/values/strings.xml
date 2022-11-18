@@ -4,4 +4,25 @@
     <string name="others_locations">Другие места</string>
     <string name="sunrise">Рассвет</string>
     <string name="sunset">Закат</string>
+    <string name="feels_like" formatted="true">Ощущается как </string>
+    <string name="uv_index">УФ индекс</string>
+    <string name="wind">Ветер</string>
+    <string name="humidity">Влажность</string>
+    <string name="today">Сегодня</string>
+    <string name="unknown">Неизвестно</string>
+    <string name="low">Низкий</string>
+    <string name="moderate">Умеренный</string>
+    <string name="high">Высокий</string>
+    <string name="very_high">Очень высокий</string>
+    <string name="extreme">Невероятно высокий</string>
+    <string name="km_h">км/ч</string>
+    <string name="selected_place">Выбранное место</string>
+    <string name="select_other_place">Выбрать другое место</string>
+    <string name="need_to_turn_on_location">Пожалуйста, включите геолокацию,чтобы увидеть погоду в своем регионе</string>
+    <string name="server_error">Проблемы с сервером, уже чиним</string>
+    <string name="timeout">Время ожидания запроса вышло, попробуйте ещё раз</string>
+    <string name="client_error">Что-то не так на вашей стороне</string>
+    <string name="connection_error">Ошибка соединения</string>
+    <string name="something_went_wrong">Что-то пошло не так..</string>
+    <string name="on_main_screen">На главный экран</string>
 </resources>
