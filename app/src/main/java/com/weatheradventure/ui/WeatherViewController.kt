@@ -1,13 +1,17 @@
 package com.weatheradventure.ui
 
+import android.view.View
+import android.widget.FrameLayout
 import androidx.annotation.StringRes
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatheradventure.R
-import com.example.weatheradventure.databinding.DrawerHeaderLayoutBinding
 import com.example.weatheradventure.databinding.FragmentWeatherBinding
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
 import com.weatheradventure.Constants
 import com.weatheradventure.data.remoteWeather.StateOfResponse
@@ -24,7 +28,6 @@ import javax.inject.Inject
 class WeatherViewController @Inject constructor(
     private val fragment: WeatherFragment,
     private val weatherBinding: FragmentWeatherBinding,
-    private val drawerLayoutBinding: DrawerHeaderLayoutBinding,
     private val viewLifecycleOwner: LifecycleOwner,
     private val viewModelFactory: WeatherViewModel.Factory,
     private val adapter: WeekWeatherAdapter,
@@ -38,17 +41,19 @@ class WeatherViewController @Inject constructor(
         }
     }
 
-    fun setUpViews() {
+    fun setupViews() {
+        fragment.requireActivity()
+            .findViewById<FrameLayout>(R.id.navigate_layout).visibility = View.VISIBLE
         setupRv()
         setupObservers()
         setupRefresh()
+        setupNavigateToSearchFragment()
         viewModel.getWeather()
     }
 
     private fun setupObservers() = with(weatherBinding) {
         viewModel.currentWeather.observe(viewLifecycleOwner) { currentWeatherModel ->
             setupCurrentWeather(currentWeatherModel)
-            setupDrawerHeader(currentWeatherModel)
         }
         viewModel.weeklyWeather.observe(viewLifecycleOwner) { list ->
             adapter.updateList(list)
@@ -70,15 +75,6 @@ class WeatherViewController @Inject constructor(
         }
     }
 
-    private fun setupDrawerHeader(currentWeather: DailyWeatherModel) = with(drawerLayoutBinding) {
-        selectedPlaceTv.text = currentWeather.place.city
-        if (currentWeather.currentWeatherIconId != null) {
-            currentWeatherIv.setImageResource(currentWeather.currentWeatherIconId)
-        }
-        if (currentWeather.degrees != null) {
-            currentDegreesTv.text = currentWeather.degrees.toDegrees()
-        }
-    }
 
     private fun setupRefresh() {
         weatherBinding.refreshLayout.setOnRefreshListener {
@@ -171,6 +167,14 @@ class WeatherViewController @Inject constructor(
             id,
             Snackbar.LENGTH_LONG
         ).show()
+    }
+
+    private fun setupNavigateToSearchFragment() {
+        fragment.requireActivity().findViewById<ShapeableImageView>(R.id.searchButton)
+            .setOnClickListener {
+                fragment.findNavController()
+                    .navigate(R.id.action_weatherFragment2_to_manageLocationsFragment)
+            }
     }
 
 

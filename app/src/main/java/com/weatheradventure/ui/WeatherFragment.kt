@@ -35,7 +35,7 @@ class WeatherFragment : Fragment() {
             fragmentComponent.weatherFragmentViewComponentFactory().create(view, viewLifecycleOwner)
                 .apply {
                     inject(this@WeatherFragment)
-                    viewController.setUpViews()
+                    viewController.setupViews()
                 }
         return view
     }

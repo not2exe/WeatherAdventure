@@ -1,7 +1,7 @@
 package com.weatheradventure
 
 object Constants {
-    const val WEATHER_API_KEY = "1384a7fcd9efed7440433a9d3c4fd1f1"
+    const val WEATHER_API_KEY = "d94bcd435b62a031771c35633f9f310a"
     const val LOCATIONS_API_KEY = "de4e32e1897a4bb98fa94741696c21fa"
     const val WEATHER_BASE_URL = "https://api.openweathermap.org/"
     const val LOCATIONS_BASE_URL = "https://api.geoapify.com/"

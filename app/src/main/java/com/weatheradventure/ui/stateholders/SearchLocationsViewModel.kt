@@ -36,7 +36,8 @@ class SearchLocationsViewModel @AssistedInject constructor(
         }
     }
 
-    fun selectPlace(onePlaceModel: OnePlaceModel) {
+    fun selectPlace(formatted: String) {
+        val onePlaceModel = predicts.value?.find { it.formatted == formatted } ?: return
         cache.setCords(onePlaceModel.lat, onePlaceModel.lon, false)
     }
 }
