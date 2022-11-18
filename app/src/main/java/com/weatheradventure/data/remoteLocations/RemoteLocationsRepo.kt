@@ -1,28 +1,26 @@
-package com.weatheradventure.data.remoteWeather
+package com.weatheradventure.data.remoteLocations
 
 import androidx.lifecycle.MutableLiveData
-import com.weatheradventure.data.CurrentLocationCache
-import com.weatheradventure.data.remoteWeather.model.WeatherResponseOneCallModel
+import com.weatheradventure.data.remoteWeather.StateOfResponse
+import com.weatheradventure.di.scopes.AppScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class RemoteWeatherRepo @Inject constructor(
-    private val weatherApi: WeatherApi,
-    private val cache: CurrentLocationCache,
-) {
-    val weatherModel = MutableLiveData<WeatherResponseOneCallModel>()
+@AppScope
+class RemoteLocationsRepo @Inject constructor(private val autocompleteApi: AutocompleteApi) {
+
+    val predicts = MutableLiveData<LocationResponseModel>()
     val stateOfResponse: MutableLiveData<StateOfResponse> =
         MutableLiveData()
 
-    suspend fun get() = withContext(Dispatchers.IO) {
+    suspend fun get(input: String) = withContext(Dispatchers.IO) {
         try {
-            val resultResponse =
-                weatherApi.getCurrentWeather(cache.getLatitude(), cache.getLongitude())
+            val resultResponse = autocompleteApi.get(input)
             if (resultResponse.isSuccessful) {
-                weatherModel.postValue(resultResponse.body())
+                predicts.postValue(resultResponse.body())
                 stateOfResponse.postValue(StateOfResponse.SUCCESS)
                 return@withContext
             }

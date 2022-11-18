@@ -1,62 +1,66 @@
 package com.weatheradventure.ui.stateholders
 
 import androidx.lifecycle.*
+import com.weatheradventure.data.CurrentLocationCache
 import com.weatheradventure.data.remoteWeather.RemoteWeatherRepo
 import com.weatheradventure.data.remoteWeather.StateOfResponse
+import com.weatheradventure.data.remoteWeather.model.WeatherResponseOneCallModel
 import com.weatheradventure.domain.MapToDomain
 import com.weatheradventure.domain.model.DailyWeatherModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
 class WeatherViewModel @AssistedInject constructor(
     @Assisted savedStateHandle: SavedStateHandle,
     private val remoteWeatherRepo: RemoteWeatherRepo,
-    private val mapToDomain: MapToDomain
+    private val mapToDomain: MapToDomain,
+    private val cache: CurrentLocationCache
 ) : ViewModel() {
     @AssistedFactory
     interface Factory {
         fun create(savedStateHandle: SavedStateHandle): WeatherViewModel
     }
+    val currentWeather: LiveData<DailyWeatherModel> =
+        Transformations.switchMap(remoteWeatherRepo.weatherModel) {
+            handleCurrent(
+                it
+            )
+        }
 
-    private val _currentWeather = MutableLiveData<DailyWeatherModel>()
-    val currentWeather: LiveData<DailyWeatherModel> = _currentWeather
+    val weeklyWeather: LiveData<List<DailyWeatherModel>> =
+        Transformations.switchMap(remoteWeatherRepo.weatherModel) { handleWeekly(it) }
 
-    private val _weeklyWeather = MutableLiveData<List<DailyWeatherModel>>()
-    val weeklyWeather: LiveData<List<DailyWeatherModel>> = _weeklyWeather
 
-    private val _stateOfResponse = MutableLiveData<StateOfResponse>()
-    val stateOfResponse = _stateOfResponse
+    val stateOfResponse = Transformations.switchMap(remoteWeatherRepo.stateOfResponse) {
+        MutableLiveData<StateOfResponse>(it)
+    }
+
+    val isGeo: LiveData<Boolean> =
+        Transformations.switchMap(cache.isGeoLiveData) { MutableLiveData<Boolean>(it) }
 
     fun getWeather() {
         viewModelScope.launch {
             remoteWeatherRepo.get()
-            collectWeatherData()
-        }
-        viewModelScope.launch {
-            collectStateOfResponse()
         }
     }
 
-    private suspend fun collectWeatherData() {
-        remoteWeatherRepo.weatherModel.collectLatest { responseModel ->
-            if (responseModel != null) {
-                _currentWeather.value = mapToDomain.toCurrentDaily(
-                    responseModel.current,
-                    responseModel.daily.first()
-                )
-                _weeklyWeather.value =
-                    responseModel.daily.map { mapToDomain.dailyResponseToDailyDomain(it) }
-            }
-        }
-    }
 
-    private suspend fun collectStateOfResponse() {
-        remoteWeatherRepo.stateOfResponse.collectLatest {
-            _stateOfResponse.value = it
-        }
-    }
+    private fun handleCurrent(responseModel: WeatherResponseOneCallModel): LiveData<DailyWeatherModel> =
+        MutableLiveData<DailyWeatherModel>(
+            mapToDomain.toCurrentDaily(
+                responseModel.current,
+                responseModel.daily.first()
+            )
+        )
+
+    private fun handleWeekly(responseModel: WeatherResponseOneCallModel): LiveData<List<DailyWeatherModel>> =
+        MutableLiveData<List<DailyWeatherModel>>(responseModel.daily.map {
+            mapToDomain.dailyResponseToDailyDomain(
+                it
+            )
+        })
+
 }

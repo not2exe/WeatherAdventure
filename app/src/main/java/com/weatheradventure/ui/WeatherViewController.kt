@@ -65,6 +65,9 @@ class WeatherViewController @Inject constructor(
             refreshLayout.isRefreshing = false
             showSnackbar(id)
         }
+        viewModel.isGeo.observe(viewLifecycleOwner) {
+            viewModel.getWeather()
+        }
     }
 
     private fun setupDrawerHeader(currentWeather: DailyWeatherModel) = with(drawerLayoutBinding) {

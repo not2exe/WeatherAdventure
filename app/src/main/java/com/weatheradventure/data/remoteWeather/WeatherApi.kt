@@ -14,6 +14,6 @@ interface WeatherApi {
         @Query(Constants.EXCLUDE) exclude: String = Constants.EXCLUDE_ONE_CALL,
         @Query(Constants.UNITS) units: String = Constants.METRIC,
         @Query(Constants.LANG) language: String = Constants.RU,
-        @Query(Constants.APP_ID) apiKey: String = Constants.API_KEY,
+        @Query(Constants.APP_ID) apiKey: String = Constants.WEATHER_API_KEY,
     ): Response<WeatherResponseOneCallModel>
 }
