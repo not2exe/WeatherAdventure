@@ -1,5 +1,5 @@
 package com.weatheradventure.data.remoteWeather
 
-class StateOfResponse {
-
+enum class StateOfResponse {
+    SUCCESS, CONNECTION_ERROR, TIMEOUT, SERVER_ERROR, CLIENT_ERROR, FAILURE
 }
