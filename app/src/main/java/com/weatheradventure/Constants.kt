@@ -1,8 +1,10 @@
 package com.weatheradventure
 
 object Constants {
-    const val API_KEY = "1384a7fcd9efed7440433a9d3c4fd1f1"
-    const val BASE_URL = "https://api.openweathermap.org/"
+    const val WEATHER_API_KEY = "1384a7fcd9efed7440433a9d3c4fd1f1"
+    const val LOCATIONS_API_KEY = "de4e32e1897a4bb98fa94741696c21fa"
+    const val WEATHER_BASE_URL = "https://api.openweathermap.org/"
+    const val LOCATIONS_BASE_URL = "https://api.geoapify.com/"
     const val TIME_PATTERN = "HH:mm"
     const val DATE_PATTERN = "EEE, $TIME_PATTERN"
     const val ONE_CALL_URL = "data/2.5/onecall"
@@ -57,4 +59,11 @@ object Constants {
     const val SNOW_NIGHT_ID = "13n"
     const val MIST_DAY_ID = "50d"
     const val MIST_NIGHT_ID = "50n"
+    const val KEY = "apiKey"
+    const val TEXT = "text"
+    const val FORMATTED = "formatted"
+    const val FEATURES = "features"
+    const val PROPERTIES = "properties"
+    const val AUTOCOMPLETE = "autocomplete"
+    const val SEARCH = "search"
 }

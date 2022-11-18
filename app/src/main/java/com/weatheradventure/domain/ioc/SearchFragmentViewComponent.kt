@@ -4,21 +4,21 @@ import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import com.weatheradventure.Constants
 import com.weatheradventure.di.scopes.ViewScope
-import com.weatheradventure.ui.WeatherFragment
+import com.weatheradventure.ui.SearchLocationsFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 import javax.inject.Named
 
 @ViewScope
 @Subcomponent(modules = [BindingModules::class])
-interface WeatherFragmentViewComponent {
+interface SearchFragmentViewComponent {
     @dagger.Subcomponent.Factory
     interface Factory {
         fun create(
-            @Named(Constants.WEATHER) @BindsInstance view: View,
+            @BindsInstance @Named(Constants.SEARCH) view: View,
             @BindsInstance viewLifecycleOwner: LifecycleOwner
-        ): WeatherFragmentViewComponent
+        ): SearchFragmentViewComponent
     }
 
-    fun inject(fragment: WeatherFragment)
+    fun inject(searchFragment: SearchLocationsFragment)
 }

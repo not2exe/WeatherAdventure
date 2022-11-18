@@ -9,4 +9,5 @@ import dagger.Subcomponent
 interface ActivityComponent {
     fun inject(activity: MainActivity)
     fun weatherFragmentComponentFactory(): WeatherFragmentComponent.Factory
+    fun searchFragmentComponentFactory(): SearchFragmentComponent.Factory
 }

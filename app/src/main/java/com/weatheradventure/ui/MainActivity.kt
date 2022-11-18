@@ -14,6 +14,7 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
@@ -23,7 +24,10 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.weatheradventure.Constants
 import com.weatheradventure.data.CurrentLocationCache
+import com.weatheradventure.data.remoteLocations.RemoteLocationsRepo
+import com.weatheradventure.data.remoteWeather.RemoteWeatherRepo
 import com.weatheradventure.di.WeatherApp
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -33,10 +37,14 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    @Inject
+    lateinit var remoteLocationsRepo: RemoteLocationsRepo
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         (application as WeatherApp).appComponent.activityComponent().inject(this)
+        lifecycleScope.launch { remoteLocationsRepo.get("Москва") }
         setupDrawerLayout()
         requestLocation()
     }
@@ -78,8 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setLocation(location: Location) {
-        cache.setLatitude(location.latitude)
-        cache.setLongitude(location.longitude)
+        cache.setCords(location.latitude, location.longitude, true)
     }
 
     private fun checkPermissions(): Boolean =
