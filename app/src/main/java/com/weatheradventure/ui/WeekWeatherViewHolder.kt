@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatheradventure.R
 import com.example.weatheradventure.databinding.DailyItemBinding
@@ -42,6 +43,10 @@ class WeekWeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val format = SimpleDateFormat(Constants.TIME_PATTERN, Locale(Constants.RU))
         dialog.setContentView(R.layout.dialog_daily_info)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         dialog.findViewById<MaterialTextView>(R.id.sunriseDateTv).text =
             format.format(dailyWeatherModel.sunrise)
         dialog.findViewById<MaterialTextView>(R.id.sunsetDateTv).text =
