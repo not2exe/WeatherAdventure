@@ -1,3 +1,8 @@
+<p align="center"> 
+  <img src="https://user-images.githubusercontent.com/91745398/216507645-d50f07a8-ac1c-423b-b807-03c55547c4e7.png" width =50% height= 50%>
+  </p>
+
+
 # Weather Adventure - Погодное приложение
 
 # Архитектура - MVVM
