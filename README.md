@@ -22,6 +22,7 @@
   <img src ="screenshots/search_dark.jpg" width =25% height= 25%>
   <img src ="screenshots/sharya_dark.jpg" width =25% height= 25%>
   </p>
+  
 ## **Светлая тема**
 <p align="center"> 
   <img src ="screenshots/geo_light.jpg" width =25% height= 25%>
