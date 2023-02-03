@@ -31,7 +31,7 @@
 ## **Светлая тема**
 <p align="center"> 
   <img src ="https://user-images.githubusercontent.com/91745398/216532510-94ba795b-dedc-4e0b-9872-97e18fdf56a9.jpg" width =25% height= 25%>
-  <img src ="(https://user-images.githubusercontent.com/91745398/216532508-f0b7b826-e6e1-480f-b804-64eeacba1adb.jpg" width =25% height= 25%>
+  <img src ="https://user-images.githubusercontent.com/91745398/216532508-f0b7b826-e6e1-480f-b804-64eeacba1adb.jpg" width =25% height= 25%>
   </p>
   
 <p align="center">   
