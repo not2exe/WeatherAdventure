@@ -6,7 +6,7 @@
 
 #Скрины:
 :---------------------------------------------------------:
-![](screenshots/geo_dark.jpg)
+<img src="screenshots/geo_dark.jpg" width =25% height= 25%>
 ![](screenshots/main_second_dark.jpg)
 ![](screenshots/main_dark.jpg)
 ![](screenshots/main_second_dark.jpg) 
